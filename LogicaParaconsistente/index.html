@@ -1,0 +1,618 @@
+<!--
+Lógica Paraconsistente 
+
+Authors: Hugo Alex <hi@hugoalex.com>
+         Luiz Matheus
+         Lucas Due
+
+URL: https://hugoalex.com/talks/logicaAplicadaAProgramacao/paraconsistente
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/logo-ufal.png"></span>
+      <h2>UNIVERSIDADE FEDERAL DE ALAGOAS</h2>
+      <h2>(UFAL)</h2>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/logo-ufal-128.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-course><!-- populated from slide_config.json --></h2>
+      <p data-config-teacher><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Time</h2>
+    </hgroup>
+    <article>
+      <ul class="time">
+        <li>
+            <figure>
+                <img src="images/hugo.jpg">
+            </figure>
+            <h3>Hugo Alex</h3>
+            <p><i><a href="https://twitter.com/@hug0alex" target="_blank">@hug0alex</a></i></p>
+        </li>
+        <li>
+            <figure>
+                <img src="images/luiz.jpg">
+            </figure>
+            <h3>Luiz Carvalho</h3>
+            <p><a href="https://twitter.com/@hug0alex" target="_blank">@?</a></p>
+        </li>
+        <li>
+            <figure>
+                <img src="images/lucas.jpg">
+            </figure>
+            <h3>Lucas Dué</h3>
+            <p><i><a href="https://twitter.com/@Lucasdue" target="_blank">@Lucasdue</a></i></p>
+        </li>
+      </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Sumário</h2>
+    </hgroup>
+    <article>
+      <ol>
+          <li>Lógica Clássica</li>
+          <li>Lógicas Não Clássica</li>
+          <li>Lógica Paraconsistente
+              <ol>
+                  <li>Lógica Paraconsistente Anotada - LPA</li>
+                  <li>O Algorítimo Para-Analisador</li>
+              </ol>
+          </li>
+          <li>Princípio da incerteza de Heisenberg</li>
+          <li>Lógica Quântica
+              <ol>
+                  <li>Aplicações</li>
+              </ol>
+          </li>
+      </ol>
+    </article>
+  </slide>
+  
+<!--  Logica clássica -->
+  <slide class="fill segue nobackground current" style="background-image: url(images/escola-de-atenas.jpg)" id="classica">
+    <hgroup class="auto-fadein">
+      <h2 class="white sombra">Lógica Clássica</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Lógica Clássica</h2>
+    </hgroup>
+    <article>
+      <ul class="build list-top ">
+          <li>
+          <figure>
+              <img src="images/proposicional.png" alt="">
+          </figure>
+          <h3>Cálculo Proposicional</h3>
+          </li>
+          <li>
+          <figure>
+              <img src="images/predicados.png" alt="">
+          </figure>
+          <h3>Cálculos de Predicados</h3></li>
+          <li><figure>
+              <img src="images/conjuntos.png" alt="">
+          </figure>
+          <h3><i>Teoria dos conjuntos</i></h3></li>
+      </ul>
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Em comum</h2>
+    </hgroup>
+    <article>
+       <pre data-lang="Princípio da Identidade.">
+            <span class="con">
+                Todo objeto é identico à si mesmo
+            </span>
+        </pre>
+        
+        <pre data-lang="Terceiro Excluido" >
+            <span class="con"> 
+                De duas proposições contraditórias (isto é, tais 
+                que uma é a negação da outra) uma delas é verdadeira. 
+            </span>
+        </pre>
+     
+        <pre data-lang="Princípio da não contradição" >
+            <span class="con">
+                Para qualquer afirmação P, é verdade que P ou não P.
+            </span>
+        </pre>  
+          
+    </article>
+  </slide>
+  
+  <slide class="fill segue nobackground current" style="background-image: url(images/beornotbe.jpg)">
+        <hgroup class="white auto-fadein" style="bottom:15%;">
+              <p style="font-size:48px; font-weight:700;" class="sombra">Um objeto não pode <span style="color:red">SER E NÃO SER</span> ao mesmo tempo.</p>
+        </hgroup>
+  </slide>
+      
+  <slide>
+      <hgroup>
+      <h2>Logíca classica falha em:</h2>
+    </hgroup>
+    <article>
+      <pre data-lang="Paradoxos" class="prettyprint">
+            <span class="con">
+                A afirmação: "Eu sou Mentiroso".
+            </span> 
+        </pre>
+        
+        <pre data-lang="Inconsistências">
+            <span class="con">
+                Consultas com mais de um especialista 
+                quase sempre nos traz as inconsistências.
+            </span> 
+        </pre>
+      </ul>
+    </article>
+  </slide>
+<!--  Lógicas Não Clássica-->
+  <slide class="fill segue nobackground current" style="background-image: url(images/robo.jpg)">
+    <hgroup class="auto-fadein ">
+      <h2 class="white sombra">Lógicas Não Clássica</h2>
+    </hgroup>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Logícas Não classicas</h2>
+    </hgroup>
+    <article>
+      
+      <ul class="build time">
+          <li><figure>
+              <img src="images/complementar.png" alt="">
+          </figure>
+          <h3>Logícas Complementares</h3></li>
+          <li>
+              <figure>
+              <img src="images/alterrnativa.png" alt="">
+          </figure>
+          <h3>Logícas Alternativas</h3></li>
+      </ul>
+    </article>
+  </slide>
+<!--  Lógica Paraconsistente-->
+  <slide class="fill segue nobackground current" style="background-image: url(images/costa.jpg)">
+    <hgroup class="auto-fadein">
+      <h2 class="white sombra">Lógica Paraconsistente</h2>
+    </hgroup>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Motivação</h2>
+    </hgroup>
+    <article>
+      <ul>
+          <li><img src="images/macieira.jpg" width="300px"></li>
+          <li>
+              Dois especialistas, um afirmam que estas maçãs estão maduras.<br/>
+A decisão é: colhê-las.<br/><br/>
+              o outro, afirmam que estas maçãs não estão maduras.<br/>
+A decisão é: não colhê-las.<br/><br/>
+              Colher ou não colher?
+          </li>
+      </ul>
+    </article>
+  </slide>
+  
+  
+  <slide>
+    <hgroup>
+      <h2>Surgimento</h2>
+    </hgroup>
+    <article >
+      <ul class="list-top" style="margin-top:120px;">
+          <li>
+              <figure><img src="images/Newton-da-Costa.jpg" width="400px"></figure>
+              <h3>Newton Da Costa</h3>
+          </li>
+          <li>
+              <figure><img src="images/Jaskowski.jpg" width="400px"></figure>
+              <h3>Stanisław Jaśkowski</h3>
+          </li>
+      </ul>
+      
+    </article>
+  </slide>
+  
+  <slide>
+    <hgroup>
+      <h2>Definição</h2>
+    </hgroup>
+    <article>
+      <ul>
+          <li>termo "paraconsistente", que literalmente significa "ao lado da consistência".</li>
+          <li><blockquote>"Uma lógica é paraconsistente se pode fundamentar sistemas dedutivos inconsistentes."</blockquote>
+              <cite>- Krause, 2004</cite>
+          </li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Lógica Paraconsistente</h2>
+    </hgroup>
+    <article >
+      <pre data-lang="Princípio da Identidade.">
+            <span class="con">
+                Todo objeto é identico à si mesmo
+            </span>
+        </pre>
+        
+        <pre data-lang="Terceiro Excluido" >
+            <span class="con"> 
+                De duas proposições contraditórias (isto é, tais 
+                que uma é a negação da outra) uma delas é verdadeira. 
+            </span>
+        </pre>
+     
+        <pre data-lang="Princípio da não contradição" >
+            <span class="con">
+                <s>Para qualquer afirmação P, é verdade que P ou não P. </s>
+            </span>
+        </pre>
+    </article>
+  </slide>
+    
+    
+<slide>
+    <hgroup>
+      <h2>A Lógica 
+Paraconsistente 
+Anotada - LPA</h2>
+    </hgroup>
+    <article>
+        <pre data-lang="Graus de Crença" >
+            <span class="con"> 
+                PROBABILIDADE
+                0%..............................100%
+                | |                              | |
+                0,0..............................1,0
+                Grau de crença normalizado
+            </span>
+        </pre>
+      </article>    
+</slide>
+    
+    <slide>
+    <hgroup>
+      <h2>A Lógica 
+Paraconsistente 
+Anotada - LPA</h2>
+    </hgroup>
+    <article>
+        <img src="images/lpa1.png" width="700px">
+    </article>
+</slide>
+    
+<slide>
+    <hgroup>
+      <h2>A Lógica 
+Paraconsistente 
+Anotada - LPA</h2>
+    </hgroup>
+    <article>
+        <pre data-lang="Cálculo do Grau de Certeza" >
+            <span class="con"> 
+                GCerteza = Gcrença – Gdescrença
+            </span>
+        </pre>
+        
+        <pre data-lang="Cálculo do Grau de Contradição" >
+            <span class="con"> 
+                GContradição = Gcrença + Gdescrença – 1
+            </span>
+        </pre>
+    </article>
+</slide>
+    
+    
+<slide>
+    <hgroup>
+      <h2>A Lógica 
+Paraconsistente 
+Anotada - LPA</h2>
+    </hgroup>
+    <article>
+        <h4>Exemplo - Vamos usar a afirmativa: “A maçã está madura”.</h4>
+        <ul style="margin-top:20px;">
+        <li>O especialista “A”, acredita que a maçã está 
+        quase madura, portanto, ela está 80% madura. 
+        O grau de crença é 0,8.</li>
+        <li>O especialista “B”, acha que ela não está  
+        madura. O grau de descrença é 3,0.</li>
+        </ul>
+        
+        <pre data-lang="Cálculo do Grau de Certeza" >
+            <span class="con"> 
+                GCerteza = 0.8 - 0.3
+                GCerteza = 0.5
+            </span>
+        </pre>
+        
+        <pre data-lang="Cálculo do Grau de Contradição" >
+            <span class="con"> 
+                GContradição = 0.8 + 0.3 – 1
+                GContradição = 0.1
+            </span>
+        </pre>
+    </article>
+</slide>
+    
+<slide>
+    <hgroup>
+      <h2>A Lógica 
+Paraconsistente 
+Anotada - LPA</h2>
+    </hgroup>
+    <article>
+        <img src="images/lpa.png" alt="">
+    </article>
+</slide>
+    
+    <slide>
+    <hgroup>
+      <h2>O Algorítimo 
+Para-Analisador</h2>
+    </hgroup>
+    <article>
+      <img src="images/lpa2.png" alt="" width="700px">
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>O Algorítimo 
+Para-Analisador</h2>
+    </hgroup>
+    <article>
+      <img src="images/lpa3.png" alt="" width="700px">
+    </article>
+  </slide>
+    
+      <!--  Princípio da incerteza de Heisenberg -->
+  <slide class=" segue nobackground current">
+    <hgroup class="auto-fadein">
+      <h2 style="line-height:62px;">Princípio da incerteza de Heisenberg</h2>
+      <h3 style="margin-top: 50px;"><img src="images/incerteza.png" alt="" width="300px"></h3>
+    </hgroup>
+    
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h1>Princípio da incerteza de Heisenberg.</h1>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center; "><img src="images/1.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Princípio da incerteza de Heisenberg.</h2>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center; margin-top:150px;"><img src="images/2.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Princípio da incerteza de Heisenberg.</h2>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center; margin-top:150px;"><img src="images/3.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Princípio da incerteza de Heisenberg.</h2>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center;"><img src="images/4.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Princípio da incerteza de Heisenberg.</h2>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center; margin-top:150px;"><img src="images/5.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <!--  A Lógica 
+Quântica -->
+  <slide class="fill segue nobackground current" style="background-image: url(images/quantum.jpg)">
+    <hgroup class="auto-fadein">
+      <h2 class="white sombra">A Lógica 
+Quântica</h2>
+    </hgroup>
+  </slide>
+    
+    
+    <slide>
+    <hgroup>
+      <h2>Lógica quântica</h2>
+    </hgroup>
+    <article>
+        <ul>
+            <li>A lógica quântica surgio por uma necessidade de raciocinar com proposições que levam em conta as leis da mecânica quantica.</li>
+            <li>Este nome surgiu em 1936 atraves de uma publicação de Garrett Birkhoff e John von Neumann, que tentaram reconciliar a Lógica Proposicional Clássica com as variáveis complementares da Mecânica Quântica, tais como posição e momento.</li>
+        </ul>
+         
+    </article>
+  </slide>
+    
+  <slide>
+    <hgroup>
+      <h2>Lei distributiva</h2>
+    </hgroup>
+    <article>
+        <pre data-lang="Lei distributiva" style="margin-top: 200px;">
+            <span class="com">p ∧ ( q ∨ q ) = ( p ∧ q ) ∨ ( p ∧ r )</span>
+         </pre>
+         
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Lei distributiva</h2>
+    </hgroup>
+    <article>
+    <h3 style="text-align: center; margin-top:150px;"><img src="images/6.jpg" alt=""></h3>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Lei distributiva</h2>
+    </hgroup>
+    <article>
+    <ul>
+        <li>A lei distributiva falha!</li>
+    </ul>
+    </article>
+  </slide>
+    
+    <slide>
+    <hgroup>
+      <h2>Lógica Quântica</h2>
+    </hgroup>
+    <article>
+    <ul>
+        <li>A lógica quântica é não-associativa e não-comutativa.</li>
+    </ul>
+    </article>
+  </slide>
+    
+    
+    <slide>
+    <hgroup>
+      <h2>Aplicações</h2>
+    </hgroup>
+    <article>
+        <ul>
+            <li>Algoritmo de Shor : dado um inteiro positivo N, achar os fatores primos de N. A Computação Quântica “resolve” este problema em tempo polinomial: a fatoração um número em primos está em NP e todos os algoritmos clássicos conhecidos para resolver este problema são exponenciais.
+            </li>
+            <li>Algoritmo de Grover: buscas em bancos de dados não estruturados e em listas não ordenadas. O algoritmo de Grover é quadraticamente mais rápido que os algoritmos clássicos.</li>
+        </ul>
+    </article>
+  </slide>
+    
+  <slide>
+      <aside class="gdbar right"><img src="images/logo-ufal-128.png" alt=""></aside>  
+      <article class="flexbox vleft auto-fadein">
+          <h2>&lt;OBRIGADO!&gt;</h2>
+      </article>    
+  </slide>
+    
+    <slide>
+        <hgroup>
+            <h2>Referências</h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>KRAUSE, D.. A Lógica Paraconsistente.<br/> Disponível em: 
+<a href="http://www.cfh.ufsc.br/~dkrause/pg/cursos/lparac.htm">&lt;http://www.cfh.ufsc.br/~dkrause/pg/cursos/lparac.htm&gt;</a>.<br/> Acesso em: 03 jun. 2014. </li>
+                <li>Ana Faria, . CONTRIBUIÇÕES HISTÓRICAS DA LÓGICA CLÁSSICA, DA LÓGICA 
+SIMBÓLICA E O SURGIMENTO DAS LÓGICAS NÃO CLÁSSICAS .<br/> Disponível em: 
+<a href="http://www.mat.ufmg.br/~espec/Monografias_Noturna/Monografia_AnaPaulaVargas.pdf">&lt;http://www.mat.ufmg.br/~espec/Monografias_Noturna/Monografia_AnaPaulaVargas.pdf&gt;</a>. Acesso em: 03 jun. 2014. </li>
+                <li>Diego A. Varela, .LÓGICA PARACONSISTENTE: 
+LÓGICAS DA INCONSISTÊNCIA FORMAL E DIALETEÍSMO 
+ . <br/>Disponível em: 
+<a href="http://www.revistafundamento.ufop.br/Volume1/n1/vol1n1-9.pdf">&lt;http://www.revistafundamento.ufop.br/Volume1/n1/vol1n1-9.pdf&gt;</a>. <br/>Acesso em: 03 jun. 2014. </li>
+                <li>DR. Paulo Schroeder de Souza, .Lógica Paraconsistente 
+Anotada
+ . <br/>Disponível em: 
+<a href="http://educaonline.eng.br/UNISANTA/HTML/DOWNLOAD/AULAS/LPA_2011.pdf">&lt;http://educaonline.eng.br/UNISANTA/HTML/DOWNLOAD/AULAS/LPA_2011.pdf&gt;</a>. <br/>Acesso em: 03 jun. 2014. </li>
+            </ul>
+        </article>
+    </slide>
+    
+    <slide>
+        <hgroup>
+            <h2>Referências</h2>
+        </hgroup>
+        <article>
+            <ul>
+                <li>Prof. João Inácio, Conheça a Lógica Paraconsistente.<br/> Disponível em: 
+<a href="http://paralogike.com.br/site/links/ver/28">&lt;http://paralogike.com.br/site/links/ver/28&gt;</a>.<br/> Acesso em: 03 jun. 2014. </li>
+               <li>Shor's algorithm.<br/> Disponível em: 
+<a href="http://en.wikipedia.org/wiki/Shor%27s_algorithm">&lt;http://en.wikipedia.org/wiki/Shor%27s_algorithm&gt;</a>.<br/> Acesso em: 03 jun. 2014. </li>
+               <li>Quantum algorithm. Disponível em: 
+<a href="http://en.wikipedia.org/wiki/Quantum_algorithm">&lt;http://en.wikipedia.org/wiki/Quantum_algorithm&gt;</a>.<br/> Acesso em: 03 jun. 2014. </li>
+               <li>Quantum logic.<br/> Disponível em: 
+<a href="http://en.wikipedia.org/wiki/Quantum_logic">&lt;http://en.wikipedia.org/wiki/Quantum_logic&gt;</a>.<br/> Acesso em: 03 jun. 2014. </li>
+            </ul>
+        </article>
+    </slide>
+    
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
